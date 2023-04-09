@@ -1,25 +1,75 @@
-\usepackage{amsmath, amssymb, amsthm}
+\usepackage{amsmath, amssymb}
+\usepackage{ulem}
+\usepackage{siunitx}
 \usepackage{ctex}
-\usepackage{orcidlink}
-
+\usepackage{tcolorbox}
+\usepackage{epigraph}
+\usepackage{caption}
+\usepackage{subcaption}
+\setkeys{Gin}{width=0.7\textwidth}
+\usepackage{listings}
+\newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
+\usepackage{pifont}
+\usepackage{tabularx}
+% \usepackage{algorithm}
+\usepackage[lined,boxed,ruled]{algorithm2e}
+\usepackage{titlesec}
+\usepackage{bm}
+\usepackage{braket}
 
-\title{\textbf{机器学习习方法}\\李航 著}
+\titlespacing\section{0pt}{8pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{8pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{8pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
-\author{Stephen CUI\orcidlink{0009-0008-2664-5882}}
-\date{April 5, 2023}
+\newcommand\tips[1]{\textcolor{green!50!black}{#1}}
+\newcommand\notes[1]{\textcolor{blue!50!black}{#1}}
+\newcommand\important[1]{\textcolor{red!90!black}{#1}}
+
+\newcommand\figures[1]{
+    \begin{figure}
+        \centering
+        \includegraphics{../Figures/#1.png}
+        \caption{#1}
+        \label{#1}
+    \end{figure}
+}
+
+\usepackage{enumitem}
+% 去掉enumerate、itemize、description中的间隙
+\setlist{noitemsep, topsep=0pt}
+
+\tcbuselibrary{minted, skins, breakable}
+\tcbset{breakable, colframe=orange!90!black,colback=orange!10, sharp corners=all}
+
 
 \usepackage[
     bottom=1.77cm,
     left=2.75cm,
     right=2.75cm,
+    marginparwidth=1.5cm,     % + <- Width of your marginpar
+    marginparsep=5mm,       % + <- Gap between text block and marginpar
 ]{geometry}
 
 \usepackage{hyperref}
+% 将引用的chapter改写为Chapter
+\usepackage[english]{babel}
+\addto\extrasenglish{
+    \def\chapterautorefname{Chapter}
+}
+\addto\extrasenglish{
+    \def\sectionautorefname{Section}
+}
+\usepackage{orcidlink}
+% 全局取消段前缩进
+% \setlength{\parindent}{0pt}
+% \setlength{\parskip}{5pt}
 \hypersetup{
     colorlinks=true,
     linkcolor=red!95!black,
-    filecolor=blue,
-    urlcolor=blue!85!black,
-    citecolor=green,
+    filecolor=red,
+    urlcolor=red!95!black,
+    citecolor=red,
 }
+
+

@@ -1,5 +1,265 @@
 \chapter{机器学习及监督学习概论\label{Ch01}}
 \section{机器学习}
+\subsection*{机器学习的特点}
 \begin{definition}[机器学习]
-    ssss
+    机器学习（machine learning）是关于计算机基于数据构建概率统计模型并运用模型
+    对数据进行预测与分析的一门学科。机器学习也称为统计机器学习 (statistical machine
+    learning）。
 \end{definition}
+
+\subsubsection*{机器学习的对象}
+机器学习关于数据的基本假设是同类数据具有一定的统计规律性，这是机器学习的前提。这里的同类数据是指具有某种共同性质的数据。
+\subsection*{机器学习的方法}
+实现机器学习方法的步骤如下：
+\begin{enumerate}
+    \item 得到一个有限的训练数据集合；
+    \item 确定包含所有可能的模型的假设空间，即学习模型的集合(model)；
+    \item 确定模型选择的准则，即学习的策略(strategy)；
+    \item 实现求解最优模型的算法，即学习的算法(algorithm)；
+    \item 通过学习方法选择最优模型；
+    \item 利用学习的最优模型对新数据进行预测或分析。
+\end{enumerate}
+
+\section{机器学习的分类}
+\subsection{基本分类}
+\subsubsection*{监督学习}
+\begin{definition}[监督学习]
+    监督学习（supervised learning）是指从标注数据中学习预测模型的机器学习问题。标注
+    数据表示输入输出的对应关系，预测模型对给定的输入产生相应的输出。监督学习的本质是
+    学习输入到输出的映射的统计规律。
+\end{definition}
+
+在监督学习中，将输入与输出所有可能取值的集合分别称为输入空间（input space）与
+输出空间（output space）。输入空间与输出空间可以是有限元素的集合，也可以是整个欧氏
+空间。每个具体的输入是一个实例（instance），通常由特征向量（feature vector）表示。
+这时，所有特征向量存在的空间称为特征空间（feature space）。有时假设输入空间与特征空间为相同的空间，对它们不予区分；有时假设输入空间与特征
+空间为不同的空间，将实例从输入空间映射到特征空间。模型实际上都是定义在特征空间
+上的。
+
+监督学习假设输入与输出的随机变量 $X$ 和 $Y$ 遵循联合概率分布 $P(X, Y)$。$P(X, Y)$ 表
+示分布函数或分布密度函数。
+
+监督学习的目的在于学习一个由输入到输出的映射，这一映射由模型来表示。监督学习的模型可以是概率模型或非概率模型，由条件概率分布 $P(Y|X)$或决策函
+数（decision function）$Y = f(X)$ 表示，随具体学习方法而定。对具体的输入进行相应的输出
+预测时，写作 $P(y|x) $或 $y = f(x)$。
+
+\subsubsection*{无监督学习}
+\begin{definition}[无监督学习]
+    无监督学习（unsupervised learning）是指从无标注数据中学习预测模型的机器学习问
+    题。无标注数据是自然得到的数据，预测模型表示数据的类别、转换或概率。无监督学习的本
+    质是学习数据中的统计规律或潜在结构。
+\end{definition}
+
+假设 $\mathcal{X}$ 是输入空间，$\mathcal{Z}$ 是隐式结构空间。要学习的模型可以表示为函数 $z = g(x)$、条件概率分布 $P(z|x)$ 或者条件概率分布 $P(x|z)$ 的形式，其中 $x \in \mathcal{X}$ 是输入，$z \in \mathcal{Z}$ 是输出。包
+含所有可能的模型的集合称为假设空间。无监督学习旨在从假设空间中选出在给定评价标准
+下的最优模型。
+
+\subsubsection*{强化学习}
+\begin{definition}[强化学习]
+    强化学习（reinforcement learning）是指智能系统在与环境的连续互动中学习最优行为
+    策略的机器学习问题。假设智能系统与环境的互动基于马尔可夫决策过程（Markov decision
+    process），智能系统能观测到的是与环境互动得到的数据序列。强化学习的本质是学习最优
+    的序贯决策。
+\end{definition}
+
+\subsubsection*{半监督学习与主动学习}
+\begin{definition}[半监督学习]
+    半监督学习（semi-supervised learning）是指利用标注数据和未标注数据学习预测模型
+    的机器学习问题。通常有少量标注数据、大量未标注数据。半监督学习旨在利用未标注数据中的信息，
+    辅助标注数据，进行监督学习，以较低的成本达到较好的学习效果。
+\end{definition}
+
+\begin{definition}[主动学习]
+    主动学习（active learning）是指机器不断主动给出实例让教师进行标注，然后利用标注
+    数据学习预测模型的机器学习问题。通常的监督学习使用给定的标注数据，往往是随机得到
+    的，可以看作是“被动学习”，主动学习的目标是找出对学习最有帮助的实例让教师标注，以
+    较小的标注代价达到较好的学习效果。
+\end{definition}
+
+\subsection{按模型分类}
+\subsubsection*{概率模型与非概率模型}
+机器学习的模型可以分为概率模型（probabilistic model）和非概率模型（non-probabilistic
+model）或者确定性模型（deterministic model）。
+
+条件概率分布 $P(y|x)$ 和函数 $y = f(x)$ 可以相互转化（条件概率分布 $P(z|x)$ 和函数
+$z = g(x)$ 同样可以）。具体地，条件概率分布最大化后得到函数，函数归一化后得到条件概率
+分布。所以，概率模型和非概率模型的区别不在于输入与输出之间的映射关系，而在于模型
+的内在结构。概率模型通常可以表示为联合概率分布的形式，其中的变量表示输入、输出、隐
+变量甚至参数。而非概率模型不一定存在这样的联合概率分布。
+
+\subsubsection*{线性模型与非线性模型}
+机器学习模型，特别是非概率模型，可以分为线性模型（linear model）和非线性模
+型（non-linear model）。如果函数 $y = f(x)$ 或 $z = g(x)$ 是线性函数，则称模型是线性模型，
+否则称模型是非线性模型。
+
+\subsubsection*{参数化模型与非参数化模型}
+机器学习模型又可以分为参数化模型（parametric model）和非参数化模型（non-parametric model）。参数化模型假设模型参数的维度固定，模型可以由有限维参数完全刻
+画；非参数化模型假设模型参数的维度不固定或者说无穷大，随着训练数据量的增加而不断
+增大。
+
+\subsection{按算法分类}
+机器学习根据算法，可以分为在线学习（online learning）与批量学习（batch learning）。
+在线学习是指每次接受一个样本，进行预测，之后学习模型，并不断重复该操作的机器学习。
+与之对应，批量学习一次接受所有数据，学习模型，之后进行预测。
+
+在线学习中，学习和预测在一个系统，每次接受一个输入 $x_t$，用已有模型给出预测 $\hat{f}(x_t)$，之后得到相
+应的反馈，即该输入对应的输出 $y_t$；系统用损失函数计算两者的差异，更新模型，并不断重复
+以上操作。
+
+\subsection{按技巧分类}
+\subsubsection*{贝叶斯学习}
+贝叶斯学习（Bayesian learning）又称为贝叶斯推理（Bayesian inference），是统计学、
+机器学习中重要的方法。其主要想法是：在概率模型的学习和推理中，利用贝叶斯定理，计算
+在给定数据条件下模型的条件概率，即后验概率，并应用这个原理进行模型的估计，以及对
+数据的预测。
+\subsubsection*{核方法}
+核方法（kernel method）是使用核函数表示和学习非线性模型的一种机器学习方法，可
+以用于监督学习和无监督学习。有一些线性模型的学习方法基于相似度计算，更具体地，向
+量内积计算。核方法可以把它们扩展到非线性模型的学习，使其应用范围更广泛。
+
+把线性模型扩展到非线性模型，直接的做法是显式地定义从输入空间（低维空间）到特
+征空间（高维空间）的映射，在特征空间中进行内积计算。
+
+\important{核方法的技巧在于不显式地定义这个映射，而是直接定义核函数，即映射之后在特征空间的内积。这样可以简化计算，达
+    到同样的效果。}
+
+假设 $x_1$ 和 $x_2$ 是输入空间的任意两个实例（向量），其内积是 $\Braket{x_1, x_2}$。假设从输入
+空间到特征空间的映射是 $\varphi$，于是 $x_1$ 和 $x_2$ 在特征空间的映像是 $\varphi(x_1)$ 和 $\varphi(x_2)$，其内积
+是 $\Braket{\varphi(x_1), \varphi(x_2)}$。核方法直接在输入空间中定义核函数 $K(x_1, x_2)$，使其满足 $K(x_1, x_2) = \Braket{\varphi(x_1), \varphi(x_2)}$。表示定理给出核函数技巧成立的充要条件。
+
+\section{机器学习方法三要素}
+\subsection{模型}
+模型的假设空间（hypothesis space）包含所有可能的条件概率
+分布或决策函数。假设空间中的模型一般有无穷多个。
+\subsection{策略}
+有了模型的假设空间，机器学习接着需要考虑的是按照什么样的准则学习或选择最优的
+模型。机器学习的目标在于从假设空间中选取最优模型。
+
+失函数度量模型一次预测的好坏，风险函数度
+量平均意义下模型预测的好坏。
+\subsubsection*{损失函数和风险函数}
+损失函数是 $f(X)$ 和 $Y$ 的非负实值函数，记作 $L(Y, f(X))$。
+\begin{itemize}
+    \item 0-1 损失函数（0-1 loss function），主要针对分类问题
+          \begin{equation}
+              L(Y, f(X)) = \left\{
+              \begin{array}{ll}
+                  1, & Y\neq f(X) \\
+                  0, & Y=f(X)     \\
+              \end{array}
+              \right.
+          \end{equation}
+    \item 平方损失函数（quadratic loss function），主要针对回归问题
+          \begin{equation}
+              L(Y, f(X)) = (Y - f(X))^2
+          \end{equation}
+    \item 绝对损失函数（absolute loss function），主要针对回归问题
+          \begin{equation}
+              L(Y, f(X)) = |Y - f(X)|
+          \end{equation}
+    \item 对数损失函数（logarithmic loss function）或对数似然损失函数（log-likelihood loss function），主要针对概率问题
+          \begin{equation}
+              L(Y, P(Y |X)) = - log P(Y |X)
+          \end{equation}
+\end{itemize}
+
+由于模型的输入、输出 $(X, Y)$ 是随机变量，遵循联合分
+布 $P(X, Y)$，所以损失函数的期望是
+\begin{equation}
+    \begin{aligned}
+        R_{exp}(f) & = E_P[L(Y,f(X))]                                         \\
+                   & = \int_{\mathcal{X}\times\mathcal{Y}}L(y,f(x))P(x,y)dxdy \\
+    \end{aligned}
+\end{equation}
+
+由于联合分布 $P(X, Y)$ 是未知的，$R_{exp}(f)$
+不能直接计算。
+
+给定一个训练数据集
+$$T = {(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)}$$
+模型 $f(X)$ 关于训练数据集的平均损失称为经验风险（empirical risk）或经验损失（empirical
+loss），记作 $R_{emp}$：
+\begin{equation}
+    \label{eq1-14}
+    R_{emp}(f)=\frac{1}{N}\sum_{i=1}^{N}L(y_i, f(x_i))
+\end{equation}
+
+经验风险最小化与结构风险最小化
+在假设空间、损失函数以及训练数据集确定的情况下，经验风险函数式 \autoref{eq1-14} 就可以确
+定。经验风险最小化（\textbf{empirical risk minimization，ERM}） 的策略认为，经验风险最小的模
+型是最优的模型。根据这一策略，按照经验风险最小化求最优模型就是求解最优化问题：
+\begin{equation}
+    \min_{f\in\mathcal{F}}\frac{1}{N}\sum_{i=1}^{N}L(y_i, f(x_i))
+\end{equation}
+
+结构风险最小化（\textbf{structural risk minimization，SRM}）是为了防止过拟合而提出来的策
+略。结构风险最小化等价于正则化（regularization）。结构风险在经验风险上加上表示模型复
+杂度的正则化项（regularizer）或罚项（penalty term）。在假设空间、损失函数以及训练数据
+集确定的情况下，结构风险的定义是：
+\begin{equation}\label{eq1-16}
+    R_{srm}(f)=\frac{1}{N}\sum_{i=1}^{N}L(y_i, f(x_i))+\lambda J(f)
+\end{equation}
+
+结构风险最小化的策略认为结构风险最小的模型是最优的模型，所以求最优模型就是求
+解最优化问题：
+\begin{equation}
+    \min_{f\in\mathcal{F}}\frac{1}{N}\sum_{i=1}^{N}L(y_i, f(x_i))+\lambda J(f)
+\end{equation}
+\subsection{算法}
+算法是指学习模型的具体计算方法。机器学习基于训练数据集，根据学习策略，从假设
+空间中选择最优模型，最后需要考虑用什么样的计算方法求解最优模型。这时，机器学习问
+题归结为最优化问题，机器学习的算法成为求解最优化问题的算法。
+\section{模型评估与模型选择}
+\subsection{训练误差与测试误差}
+\important{
+    注意，机器学习方法具体采用的损失函数未必是评估时使用的损失函数。当然，让两者一致是比较理想的。
+}
+
+\subsection{过拟合与模型选择}
+\begin{definition}[过拟合]
+    过拟合是指学习时选择的模型所包含的参数过多，以至出现这一模型对已知数据预测得很好，但对未知数据预测得很差得现象。
+\end{definition}
+
+在学习时就要防止过拟合，进行最优的模型选择，即选择复杂度适当的模型。
+\section{正则化与交叉验证}
+\subsection{正则化}
+\begin{definition}[正则化]
+    正则化是结构风险最小化策略的实现，
+    是在经验风险上加一个正则化项（regularizer） 或罚项（penalty term），即 \autoref{eq1-16}。正则化项一般是模
+    型复杂度的单调递增函数，模型越复杂，正则化值就越大。比如，正则化项可以是模型参数向
+    量的范数。
+\end{definition}
+
+正则化项可以取不同的形式。例如，在回归问题中，损失函数是平方损失，正则化项可以
+是参数向量的 $L_2$ 范数，也可以是参数向量的 $L_1$ 范数。
+
+正则化符合奥卡姆剃刀（Occam’s razor）原理。奥卡姆剃刀原理应用于模型选择时变为
+以下想法：在所有可能选择的模型中，能够很好地解释已知数据并且十分简单才是最好的模
+型，也就是应该选择的模型。
+\subsection{交叉验证}
+样本量多的话可以选择训练、验证和测试。
+
+样本量少的话可以选择简单交叉验证、K折交叉验证、留一交叉验证。
+\section{泛化能力}
+\subsection{泛化误差}
+\begin{definition}[泛化误差]
+    如果学到的模型是 $\hat{f}$，那么用这个模型对未知数据预测的误
+    差即为泛化误差（generalization error）
+    \begin{equation}
+        \begin{aligned}
+            R_{exp}(\hat{f}) & = E_P[L(Y,\hat{f}(X))]                                         \\
+                             & = \int_{\mathcal{X}\times\mathcal{Y}}L(y,\hat{f}(x))P(x,y)dxdy \\
+        \end{aligned}
+    \end{equation}
+\end{definition}
+
+\important{事实上，泛化误差就是所学习到的模型的期望风险}。
+\subsection{泛化误差上界}
+学习方法的泛化能力分析往往是通过研究泛化误差的概率上界进行的，简称为泛化误差
+上界（generalization error bound）。泛化误差上界通常具有以下性质：
+\begin{itemize}
+    \item 它是样本容量的函数，当样本
+          容量增加时，泛化误差上界趋于 0；
+    \item 它是假设空间容量（capacity）的函数，假设空间容量越
+          大，模型就越难学，泛化误差上界就越大。
+\end{itemize}
