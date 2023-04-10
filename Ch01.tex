@@ -233,13 +233,13 @@ loss），记作 $R_{emp}$：
 正则化项可以取不同的形式。例如，在回归问题中，损失函数是平方损失，正则化项可以
 是参数向量的 $L_2$ 范数，也可以是参数向量的 $L_1$ 范数。
 
-正则化符合奥卡姆剃刀（Occam’s razor）原理。奥卡姆剃刀原理应用于模型选择时变为
+正则化符合奥卡姆剃刀（Occam's razor）原理。奥卡姆剃刀原理应用于模型选择时变为
 以下想法：在所有可能选择的模型中，能够很好地解释已知数据并且十分简单才是最好的模
 型，也就是应该选择的模型。
 \subsection{交叉验证}
 样本量多的话可以选择训练、验证和测试。
 
-样本量少的话可以选择简单交叉验证、K折交叉验证、留一交叉验证。
+样本量少的话可以选择简单交叉验证、K 折交叉验证、留一交叉验证。
 \section{泛化能力}
 \subsection{泛化误差}
 \begin{definition}[泛化误差]
@@ -263,3 +263,14 @@ loss），记作 $R_{emp}$：
     \item 它是假设空间容量（capacity）的函数，假设空间容量越
           大，模型就越难学，泛化误差上界就越大。
 \end{itemize}
+
+\begin{theorem}[泛化误差上界]
+    对于二分类问题，当假设空间时有限个函数的集合$\mathcal{F}=\{f_1, f_2, \cdots, f_d\}$时，对$\forall f\in \mathcal{F}$，至少一概率$1-\delta$，$0<\delta<1$，以下不等式成立：
+    \begin{equation}
+        R(f)\leq\hat{R}(f)+\varepsilon(d,N,\delta)
+    \end{equation}
+    其中，
+    \begin{equation}
+        \varepsilon(d,N,\delta)=\sqrt{\frac{1}{2N}(\log d+\log \frac{1}{\delta})}
+    \end{equation}
+\end{theorem}
