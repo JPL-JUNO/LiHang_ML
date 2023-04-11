@@ -274,3 +274,68 @@ loss），记作 $R_{emp}$：
         \varepsilon(d,N,\delta)=\sqrt{\frac{1}{2N}(\log d+\log \frac{1}{\delta})}
     \end{equation}
 \end{theorem}
+
+\section{生成模型和判别模型}
+\begin{definition}[生成模型]
+    有数据学习联合分布概率$P(X, Y)$，然后求出$P(Y|X)$作为预测模型，即生成模型(Generatice Model)：
+    \begin{equation}
+        P(Y|X)=\frac{P(X, Y)}{P(X)}
+    \end{equation}
+
+    典型的生成模型有朴素贝叶斯法和隐马尔可夫模型。
+\end{definition}
+
+\begin{definition}[判别方法]
+    由数据直接学习决策函数 $f(X)$ 或者条件概率分布 $P(Y|X)$ 作为预测的模型。
+\end{definition}
+
+\begin{table}
+    \centering
+    \caption{生成模型与判别模型特点}
+    \begin{tabular}{ll}
+        \hline
+        生成模型                  & 判别模型                      \\
+        \hline
+        所需数据量较大               & 所需样本的数量少于生成模型             \\
+        可还原联合概率密度分布 $P(X, Y)$ & 可直接面对预测，准确率更高             \\
+        收敛速度更快                & 可简化学习问题（不需要面面俱到，仅考虑数据的特性） \\
+        能反映同类数据本身的相似度         & 不可以反映数据本身的特性              \\
+        隐变量存在时，仍可用生成模型        &                           \\
+        \hline
+    \end{tabular}
+\end{table}
+\section{监督学习的应用}
+\subsection{分类问题}
+许多机器学习方法可以用于分类，包括 k 近邻法、感知机、朴素贝叶斯法、决策树、决策列表、逻辑斯谛回归模型、支持向量机、提升方法、贝叶斯网络、神经网络、Winnow 等。
+\subsection{标注问题}
+标注问题分为学习和标注两个过程，首先给定一个训练数据集，
+\begin{equation*}
+    T = \{(x_1, y_1),(x_2, y_2),\cdots,(x_N,y_N)\}
+\end{equation*}
+
+这里$x_i=(x_i^{(1)},x_i^{(2)},\cdots,x_i^{(n)})^T, i=1,2,\cdots, N$是输入观测序列，$y_i=(y_i^{(1)},y_i^{(2)},\cdots,y_i^{(n)})^T$是相应的输入输出标记序列，$n$是序列的长度，对不同样本可以用不同的值。学习系统基于训练数据集构建一个模型，表示为条件概率分布：
+\begin{equation}
+    P(Y^{(1)},Y^{(1)},\cdots, Y^{(n)}|X^{(1)},X^{(1)},\cdots,X^{(1)})
+\end{equation}
+
+标注常用的机器学习方法有隐马尔可夫模型、条件随机场。
+
+标注问题在信息抽取、自然语言处理等领域被广泛应用，是这些领域的基本问题。例如，
+自然语言处理中的词性标注（part of speech tagging）就是一个典型的标注问题：给定一个由
+单词组成的句子，对这个句子中的每一个单词进行词性标注，即对一个单词序列预测其对应
+的词性标记序列。
+
+举一个信息抽取的例子。从英文文章中抽取基本名词短语（base noun phrase）。为此，要
+对文章进行标注。英文单词是一个观测，英文句子是一个观测序列，标记表示名词短语的“开
+始”、“结束”或“其他”（分别以 B，E，O 表示），标记序列表示英文句子中基本名词短语的
+所在位置。信息抽取时，将标记“开始”到标记“结束”的单词作为名词短语。例如，给出以
+下的观测序列，即英文句子，标注系统产生相应的标记序列，即给出句子中的基本名词短语。
+
+输入：At Microsoft Research, we have an insatiable curiosity and the desire to create
+new technology that will help define the computing experience.
+
+输出：At/O Microsoft/B Research/E, we/O have/O an/O insatiable/B curiosity/E and/
+O the/O desire/BE to/O create/O new/B technology/E that/O will/O help/O define/
+O the/O computing/B experience/E.
+\subsection{回归问题}
+回归模型正是表示从输入变量到输出变量之间映射的函数。回归问题学习等价于函数拟合：选择一条函数曲线使其很好地你和已知数据并很好地预测未知数据
